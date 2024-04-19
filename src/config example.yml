@@ -1,0 +1,51 @@
+name: MiActyl
+logo: /favicon.png
+domain: http://localhost:5173/miactyl
+
+database: jdbc:mysql://user:password@localhost:3306/database
+
+website:
+  port: 80
+
+discordserver:
+  enabled: true
+  invitelink: https://discord.gg/RvmdmEfKFX
+
+linkvertise:
+  enabled: true
+  userid: 0
+  coins: 10
+linkpays:
+  enabled: true
+  userid: 0
+  coins: 10
+  redirectOnStart: false
+
+pterodactyl:
+  domain: https://panel.example.com
+  key: 'pterodactyl_application_api_key_here'
+api:
+  client:
+    bot:
+      token: "discord_bot_token_here"
+      joinguild:
+        enabled: true
+        guilds:
+        - 0
+        registeredrole: "0"
+      overresourcessuspend: true # OOM
+      renew:
+        enabled: true
+        time: 1 # in hours
+        cost: 13
+        addotionalcost:
+          ram: 0 # per 1GB
+          cpu: 0 # per core (per 100%)
+          disk: 0 # per 1GB
+          databases: 0 # per 1
+          backups: 0 # per 1
+          allocations: 0 # per 1
+
+    oauth2:
+      id: "discord_application_id_here"
+      secret: "discord_application_secret_here"

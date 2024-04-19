@@ -1,0 +1,96 @@
+import axios from 'axios';
+import db from '@/utils/db';
+import {
+    config
+} from '@/index';
+import {
+    ResponseNode,
+    ResponseUser,
+    User
+} from '@/types/pterodactylStructure';
+
+export const createUser = async (email: string, password: string, username: string) => {
+    const alreadyExists = await axios.get(`${config.pterodactyl.domain}/api/application/users?filter[email]=${email}`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as ResponseUser).then((res: ResponseUser) => res.data.find((user: User) => user.attributes.email === email) as User);
+    if (alreadyExists) return ({
+        success: true,
+        user: alreadyExists
+    })
+    const userReturn: User = await axios.post(`${config.pterodactyl.domain}/api/application/users`, {
+        email,
+        username,
+        first_name: username,
+        last_name: username,
+    }, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as User)
+    axios.patch(`${config.pterodactyl.domain}/api/application/users/${userReturn.attributes.id}`, {
+        email,
+        username,
+        first_name: username,
+        last_name: username,
+        language: "en",
+        password
+    }, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    });
+    return {
+        success: true,
+        user: userReturn
+    }
+}
+
+export const getNodes = async () => {
+    return await axios.get(`${config.pterodactyl.domain}/api/application/nodes`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as ResponseNode);
+}
+
+export const getUser = async (id: number, userId?: string) => {
+    const user: User = await axios.get(`${config.pterodactyl.domain}/api/application/users/${id}?include=servers`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as User);
+    // get all posible data from database
+    const serversData = await Promise.all(user.attributes.relationships.servers.data.map(async (server: any) => {
+        return await db.query('SELECT * FROM servers WHERE id = ?', [server.attributes.id]).then((res: any) => res[0] || { renew: 0, locked: null });
+    }));
+    user.attributes.relationships.servers.data.forEach((server: any, index: number) => {
+        server.attributes = { ...server.attributes, ...serversData[index] };
+    });
+    const transactions = await db.query('SELECT * FROM transactions WHERE user = ?', [userId]).then((res: any) => res || []);
+    user.attributes.transactions = transactions;
+    return user;
+}
+
+export const createServer = async (name: string, user: number, node: number, args: any) => {
+    const availableNodesAlolcations = await axios.get(`${config.pterodactyl.domain}/api/application/nodes/${node}/allocations?per_page=100000`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as any);
+    return await axios.post(`${config.pterodactyl.domain}/api/application/servers`, {
+        name,
+        user,
+        node,
+        ...args,
+        allocation: {
+            ...args.allocation,
+            default: availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false).attributes.id
+        }
+    }, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as any);
+}
