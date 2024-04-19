@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import { Config } from '@/types/Config';
+if (!fs.existsSync(path.join(__dirname, 'config.yml'))) fs.writeFileSync(path.join(__dirname, 'config.yml'), fs.readFileSync(path.join(__dirname, 'config.example.yml'), 'utf8'));
 export let config: Config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;
 fs.watchFile(path.join(__dirname, 'config.yml'), () => {
     config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;

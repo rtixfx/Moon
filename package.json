@@ -4,7 +4,10 @@
 	"main": "src/index.ts",
 	"license": "MIT",
 	"scripts": {
-		"dev": "npx --yes nodemon -ext ts -exec \"npx --yes ts-node -r tsconfig-paths/register ./src/index.ts 80 127.0.0.1\""
+		"dev": "npx --yes nodemon -ext ts -exec \"npx --yes ts-node -r tsconfig-paths/register ./src/index.ts\"",
+		"install:dev": "npm install && cd src/app && npm install",
+		"dev:web": "cd src/app && vite",
+		"build": "cd src/app && vite build"
 	},
 	"dependencies": {
 		"@types/body-parser": "^1.19.5",
