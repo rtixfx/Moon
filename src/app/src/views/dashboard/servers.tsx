@@ -7,7 +7,7 @@ import Link from "@/api/Link";
 
 export default () => {
     const user = UserContext.useStoreState(state => state.user);
-    const system = SystemContenxt.useStoreState((state: any) => state.system);
+    const system = SystemContenxt.useStoreState((state) => state.system);
     useEffect(() => {
         document.title = `Servers | ${system.name}`;
     }, [system.name]);
@@ -52,7 +52,7 @@ export default () => {
                     <h4 className="servers__row__item-title">Create a new server</h4>
                     <h2>Click the button below to create a new server.</h2>
                     <div className="servers__row__item-buttons" style={{ justifyContent: 'center' }}>
-                        <p className="servers__row__item-button"><Link to="/server/create">Create Server</Link></p>
+                        <p className="servers__row__item-button"><Link to="/servers/create">Create Server</Link></p>
                     </div>
                 </div>
             </div>

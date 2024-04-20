@@ -6,6 +6,17 @@ interface SystemData {
     system: {
         name: string;
         logo: string;
+        nodes: {
+            id: number;
+            name: string;
+            plan: string;
+            sort: number;
+        }[],
+        images: {
+            id: number;
+            name: string;
+            sort: number;
+        }[]
     };
     setSystem: (payload: any) => void;
 };
@@ -14,7 +25,9 @@ interface SystemData {
 export default createContextStore({
     system: {
         name: "APP NAME",
-        logo: "/favicon.png"
+        logo: "/favicon.png",
+        nodes: [],
+        images: [],
     },
     setSystem: action((state: any, payload) => {
         state.system = { ...state.system, ...payload }

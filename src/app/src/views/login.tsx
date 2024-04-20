@@ -9,6 +9,7 @@ import {
 } from 'react-toastify';
 import axios from '@/api/axios';
 import { useEffect } from 'react';
+import { prefix } from '@/components/routes';
 
 export default () => {
     const system = SystemContenxt.useStoreState((state: any) => state.system);
@@ -18,7 +19,7 @@ export default () => {
     }, [system.name]);
     useEffect(() => {
         if (user.id !== '') {
-            window.location.href = '/';
+            window.location.href = prefix + '/';
         }
     }, [user]);
 

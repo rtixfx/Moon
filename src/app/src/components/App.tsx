@@ -23,7 +23,7 @@ const App = () => {
             <SystemContext.Provider>
                 <UserContext.Provider>
                     <Routes>
-                        <Route path="/oauth2/discord" Component={discord} />
+                        <Route path={UrlPrefix + "/oauth2/discord"} Component={discord} />
                         <Route path="*" element={<AppPost />} />
                     </Routes>
                 </UserContext.Provider>

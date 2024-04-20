@@ -18,15 +18,15 @@ export default () => {
             <div className="dashboard__row">
                 <div className="dashboard__row__item">
                     <h6>Your CPU</h6>
-                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.cpu / 100, 0).toFixed(0)} / {user.cpu} Core(s)</h3>
+                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.cpu / 100, 0).toFixed(0)} / {(user.cpu / 100).toFixed(2)} Core(s)</h3>
                 </div>
                 <div className="dashboard__row__item">
                     <h6>Your Ram</h6>
-                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.memory / 1024, 0).toFixed(0)} / {user.ram} GB(s)</h3>
+                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.memory / 1024, 0).toFixed(0)} / {(user.ram / 1024).toFixed(2)} GB(s)</h3>
                 </div>
                 <div className="dashboard__row__item">
                     <h6>Your Disk</h6>
-                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.disk / 1024, 0).toFixed(0)} / {user.disk} GB(s)</h3>
+                    <h3>{user.attributes.relationships.servers.data.reduce((acc: any, server: any) => acc + server.attributes.limits.disk / 1024, 0).toFixed(0)} / {(user.disk / 1024).toFixed(2)} GB(s)</h3>
                 </div>
                 <div className="dashboard__row__item">
                     <h6>Your Slots</h6>

@@ -9,6 +9,7 @@ import {
 } from 'react-toastify';
 import axios from '@/api/axios';
 import { useEffect } from 'react';
+import { prefix } from '@/components/routes';
 
 
 export default () => {
@@ -19,7 +20,7 @@ export default () => {
     }, [system.name]);
     useEffect(() => {
         if (user.id !== '') {
-            window.location.href = '/';
+            window.location.href = prefix + '/';
         }
     }, [user]);
     const discordLogin = () => {

@@ -4,7 +4,9 @@ import FourOFRour from '@/views/404';
 import Dashboard from '@/views/dashboard/dashboard';
 import Transactions from '@/views/dashboard/transactions';
 import Servers from '@/views/dashboard/servers';
-
+import CreateServer from '@/views/dashboard/createServer';
+import Nodes from '@/views/admin/Nodes';
+import Images from '@/views/admin/Images';
 export const prefix = '/client';
 
 export default {
@@ -40,6 +42,13 @@ export default {
             name: 'Your Servers',
             icon: 'fas fa-server purple',
             category: 'Management',
+        },
+        {
+            path: prefix + '/servers/create',
+            component: CreateServer,
+            name: 'Create Server',
+            icon: 'fas fa-plus-circle red',
+            category: 'Hidden',
         },
         {
             path: prefix + '/account',
@@ -94,7 +103,7 @@ export default {
         },
         {
             path: prefix + '/admin/nodes',
-            component: Dashboard,
+            component: Nodes,
             name: 'Nodes',
             icon: 'fas fa-server green',
             category: 'Admin',
@@ -105,6 +114,14 @@ export default {
             component: Dashboard,
             name: 'Servers',
             icon: 'fas fa-server orange',
+            category: 'Admin',
+            admin: true
+        },
+        {
+            path: prefix + '/admin/images',
+            component: Images,
+            name: 'Images',
+            icon: 'fas fa-compact-disc blue',
             category: 'Admin',
             admin: true
         }

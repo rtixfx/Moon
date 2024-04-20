@@ -17,6 +17,7 @@ export default () => {
         setMinimized(user?.sidebar)
     }, [user])
     const categories = routes.dashboard.reduce((acc: any, route: any) => {
+        if (route.category === 'Hidden') return acc
         if (!acc[route.category]) acc[route.category] = []
         if (route.admin && !user.attributes.root_admin) return acc
         acc[route.category].push(route)

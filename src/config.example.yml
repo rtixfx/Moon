@@ -1,6 +1,6 @@
 name: MiActyl
 logo: /favicon.png
-domain: http://localhost:5173/miactyl
+domain: http://localhost:5173/client
 
 database: jdbc:mysql://user:password@localhost:3306/database
 

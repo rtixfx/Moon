@@ -20,13 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-getNodes().then((nodes: ResponseNode) => {
-    nodes.data.forEach(node => {
-        db.query('INSERT INTO nodes (id, name) VALUES (?, ?) ON DUPLICATE KEY UPDATE name = ?', [node.attributes.id, node.attributes.name, node.attributes.name]);
-    })
-})
-
-
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/api/miactyl/cdn', express.static(path.join(__dirname, 'cdn')));
 
@@ -36,7 +29,7 @@ apis.forEach(api => {
 });
 
 app.listen(config.website.port, () => {
-    console.log(`Server is running on port ${config.website.port}`);
+    console.log(`Server is running on ${config.domain}`);
 });
 const errors = [
     "unhandledRejection",

@@ -45,7 +45,6 @@ interface UserData {
                 servers: {
                     object: string;
                     data: {
-                        reduce(arg0: (acc: any, server: any) => any, arg1: number): unknown;
                         object: string;
                         attributes: {
                             id: string;
@@ -83,7 +82,7 @@ interface UserData {
                             updated_at: string;
                             created_at: string;
                         }
-                    }
+                    }[]
                 }
             }
         };
