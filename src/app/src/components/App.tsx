@@ -66,7 +66,6 @@ const AppPost = () => {
         setTimeout(() => {
             axios.get("/auth/user").then((res) => res.data).then((res) => {
                 if (res.success) {
-                    navigate(UrlPrefix + "/");
                     setUser(res.user);
                 } else {
                     navigate(UrlPrefix + "/login");

@@ -10,16 +10,18 @@ import {
 import axios from '@/api/axios';
 import { useEffect } from 'react';
 import { prefix } from '@/components/routes';
+import { useNavigate } from 'react-router-dom';
 
 export default () => {
     const system = SystemContenxt.useStoreState((state: any) => state.system);
     const user = UserContext.useStoreState((state: any) => state.user);
+    const navigate = useNavigate();
     useEffect(() => {
         document.title = `Login | ${system.name}`;
     }, [system.name]);
     useEffect(() => {
         if (user.id !== '') {
-            window.location.href = prefix + '/';
+            navigate(prefix + '/');
         }
     }, [user]);
 

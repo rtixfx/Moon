@@ -22,7 +22,7 @@ interface userWithAttributes extends User {
 }
 
 
-interface ReqWithUser extends express.Request {
+export interface ReqWithUser extends express.Request {
     user?: userWithAttributes;
 }
 
@@ -63,9 +63,10 @@ app.post('/admin/images', async (req, res) => {
         ports: parseInt(req.body.ports),
         databases: parseInt(req.body.databases),
         backups: parseInt(req.body.backups),
-        cores: parseInt(req.body.cores),
-        memory: parseInt(req.body.memory),
-        disk: parseInt(req.body.disk),
+        cores: parseInt(req.body.cores) === -1 ? -1 : parseInt(req.body.cores) * 100,
+        memory: parseInt(req.body.memory) === -1 ? -1 : parseInt(req.body.memory) * 1024,
+        disk: parseInt(req.body.disk) === -1 ? -1 : parseInt(req.body.disk) * 1024,
+        image: parseInt(req.body.image)
     }
     const {
         name,
@@ -78,14 +79,11 @@ app.post('/admin/images', async (req, res) => {
         egg
     } = req.body;
     if (!name || !cores || !memory || !disk || !ports || !databases || !backups || !egg) return res.json({ success: false, error: 'Missing data (' + Object.keys(req.body).filter((key) => !req.body[key]).join(', ') + ')' });
-    if (Number.isNaN(cores) || Number.isNaN(memory) || Number.isNaN(disk) || Number.isNaN(ports) || Number.isNaN(databases) || Number.isNaN(backups)) return res.json({ success: false, error: 'Invalid data' });
-    const eggData = egg.split(' - ');
-    const nestName = eggData[0];
-    const eggName = eggData[1];
+    if (Number.isNaN(cores) || Number.isNaN(memory) || Number.isNaN(disk) || Number.isNaN(ports) || Number.isNaN(databases) || Number.isNaN(backups) || Number.isNaN(egg)) return res.json({ success: false, error: 'Invalid data (' + Object.keys(req.body).filter((key) => Number.isNaN(req.body[key])).join(', ') + ')' });
     const eggs = await getEggs();
-    const nest = eggs.data.find((nest) => nest.attributes.name === nestName)
+    const nest = eggs.data.find((nest) => nest.attributes.relationships.eggs.data.find((eggP: Egg) => eggP.attributes.id === egg));
     if (!nest) return res.json({ success: false, error: 'Invalid nest' });
-    const eggP = nest.attributes.relationships.eggs.data.find((egg) => egg.attributes.name === eggName);
+    const eggP = nest.attributes.relationships.eggs.data.find((eggP: Egg) => eggP.attributes.id === egg);
     if (!eggP) return res.json({ success: false, error: 'Invalid egg' });
     const sort = await db.query('SELECT COUNT(*) as count FROM images').then((res: any) => res[0].count);
     await db.query('INSERT INTO images (name, cpu, ram, disk, ports, `databases`, backups, nestId, imageId, startup, docker_image, sort) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [name, cores, memory, disk, ports, databases, backups, nest.attributes.id, eggP.attributes.id, eggP.attributes.startup, eggP.attributes.docker_image, sort + 1]).catch((e: any) => {

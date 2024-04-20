@@ -19,8 +19,8 @@ export default () => {
     const categories = routes.dashboard.reduce((acc: any, route: any) => {
         if (route.category === 'Hidden') return acc
         if (!acc[route.category]) acc[route.category] = []
-        if (route.admin && !user.attributes.root_admin) return acc
-        acc[route.category].push(route)
+        if (route.admin && user.role === 'root_admin') acc[route.category].push(route)
+        if (!route.admin) acc[route.category].push(route)
         return acc
     }, {})
     for (const category in categories) {

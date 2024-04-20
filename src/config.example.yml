@@ -36,23 +36,25 @@ api:
       overresourcessuspend: true # OOM
     renew:
       enabled: true
-      time: 1 # in hours
-      cost: 13 # in coins
-      deploy: 20 # on new server create
+      time: 1 # time of renew server (in hours)
+      cost: 13 # cost of renew server
+      maxTimeAlive: 72 # time when server will be deleted if not renewed (in hours)
+      deploy: 0 # cost of server deploy
+      deployTime: 1 # time of renew server after deploy (in hours)
       deployAdditionalCost: # add additional cost to deploy cost
         ram: 0 # per 1GB
         cpu: 0 # per 100%
         disk: 0 # per 1GB
         databases: 0 # per 1
         backups: 0 # per 1
-        allocations: 0 # per 1
+        ports: 0 # per 1
       addotionalcost: # add additional cost to renew cost
         ram: 0 # per 1GB
         cpu: 0 # per 100%
         disk: 0 # per 1GB
         databases: 0 # per 1
         backups: 0 # per 1
-        allocations: 0 # per 1
+        ports: 0 # per 1
 
     oauth2:
       id: "discord_application_id_here"

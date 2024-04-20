@@ -78,7 +78,7 @@ export default () => {
                             {
                                 nests.map((nest: any) => (
                                     nest.attributes.relationships.eggs.data.map((egg: any) => (
-                                        <option key={egg.attributes.id}>{nest.attributes.name} - {egg.attributes.name}</option>
+                                        <option key={egg.attributes.id} value={egg.attributes.id}>{nest.attributes.name} - {egg.attributes.name}</option>
                                     ))
                                 ))
                             }

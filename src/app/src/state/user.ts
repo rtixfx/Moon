@@ -16,6 +16,7 @@ interface UserData {
         pterodactyl: number;
         ram: number;
         disk: number;
+        role: string;
         cpu: number;
         slots: number;
         ports: number;
@@ -106,6 +107,7 @@ export default createContextStore({
         sidebar: false,
         transactions: [],
         pterodactyl: 0,
+        role: "",
         ram: 0,
         disk: 0,
         cpu: 0,

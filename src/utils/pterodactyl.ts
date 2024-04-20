@@ -82,6 +82,25 @@ export const createServer = async (name: string, user: number, node: number, arg
             Authorization: `Bearer ${config.pterodactyl.key}`
         }
     }).then((res) => res.data as any);
+    // generate one if not exists
+    var rand = 0;
+    if (!availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)) {
+        while (availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)) {
+            rand = 1025 + Math.floor(Math.random() * 56535);
+            if (!availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.ports.includes(rand))) break;
+        }
+        await axios.post(`${config.pterodactyl.domain}/api/application/nodes/${node}/allocations`, {
+            ip: availableNodesAlolcations.data[0].attributes.ip,
+            alias: availableNodesAlolcations.data[0].attributes.ip,
+            ports: [
+                rand
+            ]
+        }, {
+            headers: {
+                Authorization: `Bearer ${config.pterodactyl.key}`
+            }
+        });
+    }
     return await axios.post(`${config.pterodactyl.domain}/api/application/servers`, {
         name,
         user,
@@ -109,4 +128,28 @@ export const getEggs = async () => {
 export const getEgg = async (id: number) => {
     const eggs: ResponseNest = await getEggs();
     return eggs.data.find((nest: Nest) => nest.attributes.relationships.eggs.data.find((egg: Egg) => egg.attributes.id === id));
+}
+
+export const getEggByNest = async (nest: number, egg: number) => {
+    return await axios.get(`${config.pterodactyl.domain}/api/application/nests/${nest}/eggs/${egg}?include=variables`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as Egg);
+}
+
+export const deleteServer = async (id: number) => {
+    return await axios.delete(`${config.pterodactyl.domain}/api/application/servers/${id}`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.status === 204);
+}
+
+export const suspendServer = async (id: number) => {
+    return await axios.post(`${config.pterodactyl.domain}/api/application/servers/${id}/suspend`, {}, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.status === 204);
 }

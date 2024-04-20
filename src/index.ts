@@ -23,6 +23,8 @@ if (JSON.stringify(newTypes) !== JSON.stringify(fs.readFileSync(path.join(__dirn
 
 fs.watchFile(path.join(__dirname, 'config.yml'), () => {
     config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;
+    const newTypes = `export interface Config {\n${generateTypesFileForConfig(config)}}`;
+    if (JSON.stringify(newTypes) !== JSON.stringify(fs.readFileSync(path.join(__dirname, 'types', 'Config.ts'), 'utf8'))) fs.writeFileSync(path.join(__dirname, 'types', 'Config.ts'), newTypes);
 })
 import express = require('express');
 import bodyParser from 'body-parser';
@@ -39,6 +41,11 @@ app.use(cookieParser());
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/api/miactyl/cdn', express.static(path.join(__dirname, 'cdn')));
+
+const handlers = fs.readdirSync(path.join(__dirname, 'handlers'));
+handlers.forEach(handler => {
+    require(path.join(__dirname, 'handlers', handler))
+});
 
 const apis = fs.readdirSync(path.join(__dirname, 'api'));
 apis.forEach(api => {

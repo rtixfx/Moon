@@ -136,6 +136,25 @@ export interface Egg {
             container: string;
             extends: string;
         }
+        relationships: {
+            variables: {
+                object: string;
+                data: {
+                    object: string;
+                    attributes: {
+                        name: string;
+                        description: string;
+                        env_variable: string;
+                        default_value: string;
+                        server_value: string;
+                        is_editable: boolean;
+                        rules: string;
+                        created_at: string;
+                        updated_at: string;
+                    }
+                }[]
+            }
+        }
         created_at: string;
         updated_at: string;
 

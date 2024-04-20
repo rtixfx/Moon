@@ -40,14 +40,16 @@ api: {
             enabled: boolean;
             time: number;
             cost: number;
+            maxTimeAlive: number;
             deploy: number;
+            deployTime: number;
             deployAdditionalCost: {
                 ram: number;
                 cpu: number;
                 disk: number;
                 databases: number;
                 backups: number;
-                allocations: number;
+                ports: number;
             };
             addotionalcost: {
                 ram: number;
@@ -55,7 +57,7 @@ api: {
                 disk: number;
                 databases: number;
                 backups: number;
-                allocations: number;
+                ports: number;
             };
         };
         oauth2: {
