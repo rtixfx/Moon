@@ -17,7 +17,7 @@ setInterval(() => {
 app.use('/auth', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const ip = req.headers['x-forwarded-for'] as string || req.socket.remoteAddress as string;
     if (!rateLimiter[ip]) rateLimiter[ip] = 0;
-    if (rateLimiter[ip] > 10) return res.status(429).json({ success: false, error: 'Rate limit exceeded' });
+    if (rateLimiter[ip] > 1000) return res.status(429).json({ success: false, error: 'Rate limit exceeded' });
     rateLimiter[ip]++;
     next();
 })
@@ -40,6 +40,10 @@ app.get('/auth/user', async (req: express.Request, res: express.Response) => {
     const pterodactylUser: User = await getUser(user.pterodactyl, user.id).catch((e) => {
         return null as any;
     })
+    if (pterodactylUser.attributes.root_admin === true && user.role !== 'root_admin') {
+        user.role = 'root_admin';
+        db.query('UPDATE users SET role = ? WHERE id = ?', ['root_admin', user.id]);
+    }
     res.json({ success: true, user: { ...user, password: undefined, attributes: pterodactylUser.attributes } });
 });
 

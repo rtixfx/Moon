@@ -7,7 +7,7 @@
 .sideRender__container {
 	width: calc(100vw - 355px);
 	margin-left: 270px;
-	height: 100%;
+	height: calc(100vh - 150px);
 }
 .sidebar[data-minimize] ~ .sideRender__container {
 	width: calc(100vw - 155px);
@@ -189,4 +189,10 @@ i {
 	.sidebar__minimize[data-navbar] {
 		opacity: 1;
 	}
+}
+
+.link {
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
 }

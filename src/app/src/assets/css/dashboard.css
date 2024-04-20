@@ -1,3 +1,4 @@
+@import url("./modal.css");
 .dashboard {
 	padding: 20px;
 	width: 100%;
@@ -49,6 +50,9 @@
 }
 .dashboard__servers-list-title {
 	margin-bottom: 1rem;
+	width: 100%;
+	text-align: center;
+	font-size: 1.5rem;
 }
 .dashboard__servers-list-table-responsive {
 	overflow-x: auto;
@@ -164,4 +168,88 @@
 	flex-direction: column;
 	height: 350px;
 	width: 100%;
+}
+
+.dashboard__form {
+	margin-top: 1.5rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.dashboard__form h2 {
+	font-size: 1.5rem;
+	color: white;
+	margin-bottom: 1rem;
+	width: 100%;
+	text-align: center;
+}
+.dashboard__form form {
+	width: 100%;
+	max-width: 750px;
+	background-color: #191c24;
+	padding: 1rem;
+	border-radius: 15px;
+}
+
+.dashboard__form-input {
+	padding: 1rem;
+	color: white;
+	margin-bottom: 1rem;
+}
+.dashboard__form-input label {
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.5);
+}
+.dashboard__form-input input {
+	background-color: #2a3038;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: white;
+	width: 100%;
+	padding: 0.5rem;
+	margin-top: 0.5rem;
+	border-radius: 50px;
+}
+
+.dashboard__form-input input:focus {
+	border: 1px solid #7289da;
+	outline: none;
+}
+
+.dashboard__form-input input::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+}
+.dashboard__form-input select {
+	background-color: #2a3038;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: white;
+	width: 100%;
+	padding: 0.5rem;
+	margin-top: 0.5rem;
+	border-radius: 50px;
+}
+.dashboard__form-input option {
+	background-color: #2a3038;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: white;
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 50px;
+}
+
+.dashboard__form-input select:focus {
+	border: 1px solid #7289da;
+	outline: none;
+}
+.dashboard__form-input select::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+}
+.dashboard__form-input input[type="submit"] {
+	background-color: #fc6b05;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
 }

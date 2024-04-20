@@ -10,7 +10,9 @@ app.get('/system', async (req: express.Request, res: express.Response) => {
         name: config.name,
         logo: config.logo,
         nodes: nodes,
-        images: images
+        images: images,
+        deployCost: config.api.client.renew.deploy,
+        deployCostAddition: config.api.client.renew.deployAdditionalCost
     })
 });
 

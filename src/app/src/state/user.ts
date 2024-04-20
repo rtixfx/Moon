@@ -30,6 +30,14 @@ interface UserData {
         plan: string;
         attributes: {
             id: string;
+            transactions: {
+                id: string;
+                user: number;
+                item: string;
+                quantity: number;
+                price: number;
+                created_at: string;
+            }[];
             external_id: string | null;
             uuid: string;
             username: string;
@@ -115,6 +123,7 @@ export default createContextStore({
         avatar_url: "",
         attributes: {
             id: "",
+            transactions: [],
             external_id: null,
             uuid: "",
             username: "",

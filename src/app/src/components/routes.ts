@@ -7,6 +7,7 @@ import Servers from '@/views/dashboard/servers';
 import CreateServer from '@/views/dashboard/createServer';
 import Nodes from '@/views/admin/Nodes';
 import Images from '@/views/admin/Images';
+import CreateImage from '@/views/admin/createImage';
 export const prefix = '/client';
 
 export default {
@@ -42,13 +43,6 @@ export default {
             name: 'Your Servers',
             icon: 'fas fa-server purple',
             category: 'Management',
-        },
-        {
-            path: prefix + '/servers/create',
-            component: CreateServer,
-            name: 'Create Server',
-            icon: 'fas fa-plus-circle red',
-            category: 'Hidden',
         },
         {
             path: prefix + '/account',
@@ -124,6 +118,27 @@ export default {
             icon: 'fas fa-compact-disc blue',
             category: 'Admin',
             admin: true
-        }
+        },
+        {
+            path: prefix + '/admin/images/:id/delete',
+            component: Dashboard,
+            name: 'Create Server',
+            icon: 'fas fa-plus-circle red',
+            category: 'Hidden',
+        },
+        {
+            path: prefix + '/servers/create',
+            component: CreateServer,
+            name: 'Create Server',
+            icon: 'fas fa-plus-circle red',
+            category: 'Hidden',
+        },
+        {
+            path: prefix + '/admin/images/create',
+            component: CreateImage,
+            name: 'Create Server',
+            icon: 'fas fa-plus-circle red',
+            category: 'Hidden',
+        },
     ]
 }

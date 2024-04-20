@@ -3,10 +3,15 @@ import SystemContenxt from "@/state/system";
 import '@/assets/css/dashboard.css';
 import { useEffect } from "react";
 import Link from "@/api/Link";
+import { createModal } from "@/components/createModal";
+import { setServers } from "dns";
+import { toast } from "react-toastify";
+import axios from "@/api/axios";
 
 
 export default () => {
     const user = UserContext.useStoreState(state => state.user);
+    const setUser = UserContext.useStoreActions((actions: any) => actions.setUser);
     const system = SystemContenxt.useStoreState((state) => state.system);
     useEffect(() => {
         document.title = `Servers | ${system.name}`;
@@ -42,7 +47,42 @@ export default () => {
                                 <div className="servers__row__item-buttons">
                                     <p className="servers__row__item-button"><Link to={`/server/${server.attributes.uuid}`}>Edit Server</Link></p>
                                     <p className="servers__row__item-button" data-secondary><Link to={`/server/${server.attributes.uuid}/renew`}>Renew Server</Link></p>
-                                    <p className="servers__row__item-button" data-danger><Link to={`/server/${server.attributes.uuid}/delete`}>Delete Server</Link></p>
+                                    <p className="servers__row__item-button link" data-danger><a onClick={() => {
+                                        const d = new BroadcastChannel('server')
+                                        d.onmessage = (e) => {
+                                            const data = e.data;
+                                            if (data.action === 'delete') {
+                                                d.close();
+                                                toast.promise(axios.delete(`/server/${data.id}`).then((res) => {
+                                                    if (!res.data.success) throw new Error(res.data.error);
+                                                    setUser({
+                                                        attributes: {
+                                                            relationships: {
+                                                                servers: {
+                                                                    data: user.attributes.relationships.servers.data.filter((server: any) => {
+                                                                        return server.attributes.uuid !== data.id
+                                                                    })
+                                                                }
+                                                            }
+                                                        }
+                                                    })
+                                                }), {
+                                                    pending: 'Deleting image...',
+                                                    success: 'Image deleted successfully!',
+                                                    error: {
+                                                        render({ data }: any) {
+                                                            // When the promise reject, data will contains the error
+                                                            return data?.message ? data.message : (data ? data : 'An error occurred while deleting the image');
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                                        createModal('Are you sure you want to delete ' + server.attributes.name + '?', [{
+                                            name: 'Yes', action: `new BroadcastChannel('server').postMessage({ action: 'delete', id: '${server.attributes.uuid}' }); document.querySelector('.modal').style.opacity = '0'; setTimeout(() => document.body.removeChild(document.querySelector('.modal')), 300)`,
+                                            data: { danger: true }
+                                        }])
+                                    }}>Delete Server</a></p>
                                 </div>
                             </div>
                         )

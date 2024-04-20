@@ -98,6 +98,69 @@ export interface Node {
     }
 }
 
+export interface Egg {
+    object: string;
+    attributes: {
+        id: number;
+        uuid: string;
+        name: string;
+        nest: number;
+        author: string;
+        description: string;
+        docker_image: string;
+        docker_images: string[];
+        config: {
+            files: {
+                [key: string]: {
+                    parser: string;
+                    find: string;
+                    replace: string;
+                };
+            };
+            startup: {
+                done: string;
+                userInteraction: string[]
+            }
+            stop: string;
+            logs: {
+                custom: boolean;
+                location: string;
+            }
+            extends: string;
+        };
+        startup: string;
+        script: {
+            privileged: boolean;
+            install: string;
+            entry: string;
+            container: string;
+            extends: string;
+        }
+        created_at: string;
+        updated_at: string;
+
+    }
+
+}
+export interface Nest {
+    object: string;
+    attributes: {
+        id: number;
+        uuid: string;
+        author: string;
+        name: string;
+        description: string;
+        created_at: string;
+        updated_at: string;
+        relationships: {
+            eggs: {
+                object: string;
+                data: Egg[];
+            }
+        }
+    }
+}
+
 
 
 export interface ResponseUser {
@@ -113,4 +176,13 @@ export interface ResponseServer {
 export interface ResponseNode {
     object: string;
     data: Node[]
+}
+export interface ResponseEgg {
+    object: string;
+    data: Egg[]
+}
+
+export interface ResponseNest {
+    object: string;
+    data: Nest[]
 }

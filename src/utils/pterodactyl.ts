@@ -4,6 +4,9 @@ import {
     config
 } from '@/index';
 import {
+    Egg,
+    Nest,
+    ResponseNest,
     ResponseNode,
     ResponseUser,
     User
@@ -93,4 +96,17 @@ export const createServer = async (name: string, user: number, node: number, arg
             Authorization: `Bearer ${config.pterodactyl.key}`
         }
     }).then((res) => res.data as any);
+}
+
+export const getEggs = async () => {
+    const nests: ResponseNest = await axios.get(`${config.pterodactyl.domain}/api/application/nests?include=eggs`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as ResponseNest);
+    return nests;
+}
+export const getEgg = async (id: number) => {
+    const eggs: ResponseNest = await getEggs();
+    return eggs.data.find((nest: Nest) => nest.attributes.relationships.eggs.data.find((egg: Egg) => egg.attributes.id === id));
 }

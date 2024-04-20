@@ -38,23 +38,12 @@ const AppPost = () => {
     const navigate = useNavigate();
     const setUser = UserContext.useStoreActions((actions: any) => actions.setUser);
     const setSystem = SystemContext.useStoreActions((actions: any) => actions.setSystem);
-    const [serverOffline, setServerOffline] = useState(2);
     useEffect(() => {
-        if (serverOffline === 0) {
-            new BroadcastChannel('auth').postMessage('auth');
-            setServerOffline(2);
-        }
-    }, [serverOffline])
-    useEffect(() => {
-        setInterval(() => {
-            axios.get("/system").then((res) => res.data).then((res) => {
-                setSystem(res);
-                setServerOffline((prev) => prev === 1 ? 0 : prev);
-            }).catch((e) => {
-                console.log(e);
-                setServerOffline(1);
-            })
-        }, 1000)
+        axios.get("/system").then((res) => res.data).then((res) => {
+            setSystem(res);
+        }).catch((e) => {
+            console.log(e);
+        })
         setTimeout(() => {
             axios.get("/auth/user").then((res) => res.data).then((res) => {
                 if (res.success) {

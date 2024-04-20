@@ -30,7 +30,7 @@
   },
   "include": [
     "**/*",
-    ".env"
+    "src/@types/index.d.ts"
   ],
   "exclude": [
     "node_modules",
