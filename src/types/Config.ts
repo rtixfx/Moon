@@ -3,6 +3,20 @@ name: string;
 logo: string;
 domain: string;
 database: string;
+status: {
+    webhook: string;
+    webhookEnabled: boolean;
+    webhookInterval: number;
+    avatar: string;
+    name: string;
+    message: string;
+};
+log: {
+    webhook: string;
+    webhookEnabled: boolean;
+    avatar: string;
+    name: string;
+};
 website: {
     port: number;
 };

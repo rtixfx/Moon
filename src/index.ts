@@ -4,6 +4,8 @@ import yaml from 'js-yaml';
 import { Config } from '@/types/Config';
 if (!fs.existsSync(path.join(__dirname, 'config.yml'))) fs.writeFileSync(path.join(__dirname, 'config.yml'), fs.readFileSync(path.join(__dirname, 'config.example.yml'), 'utf8'));
 export let config: Config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;
+export const saveConfig = () => fs.writeFileSync(path.join(__dirname, 'config.yml'), yaml.dump(config));
+
 const generateTypesFileForConfig = (object: any, spaces: number = 0) => {
     let types = '';
     Object.keys(object).forEach(key => {

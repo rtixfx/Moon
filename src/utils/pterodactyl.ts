@@ -51,7 +51,7 @@ export const createUser = async (email: string, password: string, username: stri
 }
 
 export const getNodes = async () => {
-    return await axios.get(`${config.pterodactyl.domain}/api/application/nodes`, {
+    return await axios.get(`${config.pterodactyl.domain}/api/application/nodes?include=servers`, {
         headers: {
             Authorization: `Bearer ${config.pterodactyl.key}`
         }
@@ -82,25 +82,7 @@ export const createServer = async (name: string, user: number, node: number, arg
             Authorization: `Bearer ${config.pterodactyl.key}`
         }
     }).then((res) => res.data as any);
-    // generate one if not exists
-    var rand = 0;
-    if (!availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)) {
-        while (availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)) {
-            rand = 1025 + Math.floor(Math.random() * 56535);
-            if (!availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.ports.includes(rand))) break;
-        }
-        await axios.post(`${config.pterodactyl.domain}/api/application/nodes/${node}/allocations`, {
-            ip: availableNodesAlolcations.data[0].attributes.ip,
-            alias: availableNodesAlolcations.data[0].attributes.ip,
-            ports: [
-                rand
-            ]
-        }, {
-            headers: {
-                Authorization: `Bearer ${config.pterodactyl.key}`
-            }
-        });
-    }
+    if (!availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)) return Promise.reject('No available allocations');
     return await axios.post(`${config.pterodactyl.domain}/api/application/servers`, {
         name,
         user,
@@ -108,7 +90,7 @@ export const createServer = async (name: string, user: number, node: number, arg
         ...args,
         allocation: {
             ...args.allocation,
-            default: availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false).attributes.id
+            default: availableNodesAlolcations.data.find((allocation: any) => allocation.attributes.assigned === false)?.attributes.id
         }
     }, {
         headers: {

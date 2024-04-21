@@ -95,6 +95,12 @@ export interface Node {
         daemon_base: string;
         created_at: string;
         updated_at: string;
+        relationships: {
+            servers: {
+                object: string;
+                data: Server[];
+            };
+        };
     }
 }
 

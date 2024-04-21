@@ -2,6 +2,19 @@ name: MiActyl
 logo: /favicon.png
 domain: http://localhost:5173/client
 
+status: 
+  webhook: discord_webhook_here
+  webhookEnabled: true
+  webhookInterval: 5
+  avatar: https://cdn.discordapp.com/attachments/1062445833401933885/1231531072202739733/firecone_logo.png?ex=66262830&is=6624d6b0&hm=09c49be558b7c1cc5488fafa171f41288e2ddbcd354dcdb389c2d9fe084d082f&
+  name: MiActyl - Status
+  message: ''
+log: 
+  webhook: discord_webhook_here
+  webhookEnabled: true
+  avatar: https://cdn.discordapp.com/attachments/1062445833401933885/1231531072202739733/firecone_logo.png?ex=66262830&is=6624d6b0&hm=09c49be558b7c1cc5488fafa171f41288e2ddbcd354dcdb389c2d9fe084d082f&
+  name: MiActyl - Logs
+
 database: jdbc:mysql://user:password@localhost:3306/database
 
 website:

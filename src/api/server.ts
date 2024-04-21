@@ -1,8 +1,8 @@
 import express from 'express';
 import { config } from '@/index';
 import db from '@/utils/db';
-import { createServer, deleteServer, getEggByNest, getEggs, getUser } from '@/utils/pterodactyl';
-import { Egg, Server, User } from '@/types/pterodactylStructure';
+import { createServer, deleteServer, getEggByNest, getEggs, getNodes, getUser } from '@/utils/pterodactyl';
+import { Egg, Node, ResponseNode, Server, User } from '@/types/pterodactylStructure';
 import { ReqWithUser } from './admin';
 const app = express.Router();
 
@@ -113,7 +113,12 @@ app.post('/server', async (req: ReqWithUser, res) => {
     if (!egg) return res.json({ success: false, error: 'Egg not found' });
     if (!name) name = 'Change me! (Settings -> SERVER NAME)';
     const avaibleNodes = await db.query('SELECT * FROM nodes WHERE plan = ? ORDER BY sort ASC', [req?.user?.plan]);
-    const server = await createServer(name, req.user.pterodactyl, avaibleNodes[Math.floor(Math.random() * avaibleNodes.length)].id, {
+    const ServerNodes = await getNodes().then((res: ResponseNode) => res.data.filter((node: Node) => node.attributes.relationships.servers.data.length < avaibleNodes.find((n: any) => n.id === node.attributes.id)?.slots || avaibleNodes.find((n: any) => n.id === node.attributes.id)?.slots === -1)).catch((e) => {
+        console.log(e);
+        return [];
+    });
+    if (ServerNodes.length === 0) return res.json({ success: false, error: 'No available nodes' });
+    const server = await createServer(name, req.user.pterodactyl, ServerNodes[0].attributes.id, {
         limits: {
             memory: memory,
             swap: 0,
@@ -135,8 +140,12 @@ app.post('/server', async (req: ReqWithUser, res) => {
         egg: egg.attributes.id,
         docker_image: image.docker_image,
         startup: image.startup,
-    });
+    }).catch((e) => {
+        res.json({ success: false, error: e });
+        return "Jack";
+    })
     if (!server) return res.json({ success: false, error: 'Error while creating server' });
+    if (server === "Jack") return;
     await db.query('INSERT INTO servers (id, renew) VALUES (?, ?)', [server.attributes.id, new Date(new Date().getTime() + config.api.client.renew.deployTime * 60 * 60 * 1000)])
     res.json({ success: true });
 });
