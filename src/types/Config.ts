@@ -1,6 +1,7 @@
 export interface Config {
     name: string;
     logo: string;
+    autoUpdate: boolean;
     domain: string;
     database: string;
     status: {
@@ -19,21 +20,6 @@ export interface Config {
     website: {
         port: number;
     };
-    discordserver: {
-        enabled: boolean;
-        invitelink: string;
-    };
-    linkvertise: {
-        enabled: boolean;
-        userid: number;
-        coins: number;
-    };
-    linkpays: {
-        enabled: boolean;
-        userid: number;
-        coins: number;
-        redirectOnStart: boolean;
-    };
     pterodactyl: {
         domain: string;
         key: string;
@@ -47,9 +33,9 @@ export interface Config {
                     guilds: number[];
                     registeredrole: string;
                 };
-                overresourcessuspend: boolean;
             };
             renew: {
+                overresourcessuspend: boolean;
                 enabled: boolean;
                 time: number;
                 cost: number;

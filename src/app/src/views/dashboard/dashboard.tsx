@@ -2,7 +2,6 @@ import UserContext from "@/state/user";
 import SystemContenxt from "@/state/system";
 import '@/assets/css/dashboard.css';
 import { useEffect } from "react";
-import Link from "@/api/Link";
 
 
 export default () => {

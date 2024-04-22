@@ -1,7 +1,7 @@
 {
 	"name": "arsenus-remade",
-	"version": "v1",
-	"main": "src/index.ts",
+	"version": "v1d",
+	"main": "entry.js",
 	"license": "MIT",
 	"scripts": {
 		"dev": "npx --yes nodemon -ext ts -exec \"npx --yes ts-node -r tsconfig-paths/register ./src/index.ts\"",
@@ -16,6 +16,7 @@
 		"axios": "^1.6.8",
 		"body-parser": "^1.20.2",
 		"cookie-parser": "^1.4.6",
+		"download": "^8.0.0",
 		"ejs": "^3.1.9",
 		"express": "^4.19.2",
 		"js-yaml": "^4.1.0",

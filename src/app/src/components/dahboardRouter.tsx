@@ -22,8 +22,8 @@ export default function DashboardRouter() {
                                 <div className="sideRender__container">
                                     <div className='navSpacer'></div>
                                     <route.component />
-                                    <Footer />
                                 </div>
+                                <Footer />
                             </div>
                         </>
                         )

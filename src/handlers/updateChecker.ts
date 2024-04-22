@@ -13,3 +13,5 @@ const job = cron.schedule('*/5 * * * *', async () => {
         }
     });
 })
+job.start();
+job.now();
