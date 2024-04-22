@@ -5,6 +5,7 @@ yarn.lock
 pnpm-lock.yaml
 package-lock.json
 src/config.yml
+latest-stable.zip
 
 .vscode/*
 !.vscode/extensions.json
