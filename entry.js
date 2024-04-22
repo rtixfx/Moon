@@ -5,8 +5,10 @@ const download = require('download');
 const admZip = require('adm-zip');
 
 const startMainProcess = async () => {
+    console.log('Checking for updates...')
     const ver = await axios.get('https://raw.githubusercontent.com/misalibaytb/miactyl/latest-stable/package.json')
     if (ver.data.version != require('./package.json').version) {
+        console.log('New version available. Updating...');
         download('https://codeload.github.com/misalibaytb/miactyl/zip/refs/heads/latest-stable').pipe(require('fs').createWriteStream('latest-stable.zip')).on('finish', () => {
             const backup = new admZip();
             backup.addLocalFolder('./src');
@@ -19,6 +21,7 @@ const startMainProcess = async () => {
         });
         return;
     }
+    console.log('No updates found. Starting main process...');
 
 
     const main = spawn('npx', ['--yes', 'ts-node', '-r', 'tsconfig-paths/register', './src/index.ts'], {
