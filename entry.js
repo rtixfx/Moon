@@ -22,7 +22,7 @@ const copyDir = (src, dest) => {
 const startMainProcess = async () => {
     console.log('Checking for updates...')
     const ver = await axios.get('https://raw.githubusercontent.com/misalibaytb/miactyl/latest-stable/package.json')
-    if (ver.data.version != require('./package.json').version) {
+    if (ver.data.version != JSON.parse(fs.readFileSync('package.json')).version) {
         console.log('New version available. Updating...');
         await download('https://codeload.github.com/misalibaytb/miactyl/zip/refs/heads/latest-stable', './', { filename: 'latest-stable.zip' })
         console.log('Downloaded latest stable version. Updating...');
