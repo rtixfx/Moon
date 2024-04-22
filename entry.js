@@ -11,9 +11,6 @@ const startMainProcess = async () => {
         console.log('New version available. Updating...');
         await download('https://codeload.github.com/misalibaytb/miactyl/zip/refs/heads/latest-stable', './', { filename: 'latest-stable.zip' })
         console.log('Downloaded latest stable version. Updating...');
-        const backup = new admZip();
-        backup.addLocalFolder('./src');
-        backup.writeZip('backup.zip');
         const zip = new admZip('latest-stable.zip');
         zip.extractAllTo('./', true);
         require('fs').unlinkSync('latest-stable.zip');
