@@ -3,6 +3,21 @@ process.stdin.resume();
 const axios = require('axios');
 const download = require('download');
 const admZip = require('adm-zip');
+const fs = require('fs');
+
+const copyDir = (src, dest) => {
+    fs.readdirSync(src).forEach(file => {
+        const stat = fs.statSync(`${src}/${file}`);
+        if (stat.isDirectory()) {
+            fs.mkdirSync(dest + '/' + file, { recursive: true });
+            copyDir(`${src}/${file}`, dest + '/' + file);
+        }
+        else {
+            fs.copyFileSync(`${src}/${file}`, dest + '/' + file);
+        }
+    }
+    );
+}
 
 const startMainProcess = async () => {
     console.log('Checking for updates...')
@@ -13,7 +28,8 @@ const startMainProcess = async () => {
         console.log('Downloaded latest stable version. Updating...');
         const zip = new admZip('latest-stable.zip');
         zip.extractAllTo('./', true);
-        require('fs').unlinkSync('latest-stable.zip');
+        copyDir('miactyl-latest-stable', '.');
+        fs.unlinkSync('latest-stable.zip');
         console.log('Updated to latest stable version. Restarting main process...');
         startMainProcess();
         return;
