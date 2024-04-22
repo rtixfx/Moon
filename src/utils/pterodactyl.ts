@@ -12,6 +12,14 @@ import {
     User
 } from '@/types/pterodactylStructure';
 
+export const getUsers = async () => {
+    return await axios.get(`${config.pterodactyl.domain}/api/application/users?per_page=100000`, {
+        headers: {
+            Authorization: `Bearer ${config.pterodactyl.key}`
+        }
+    }).then((res) => res.data as ResponseUser);
+}
+
 export const createUser = async (email: string, password: string, username: string) => {
     const alreadyExists = await axios.get(`${config.pterodactyl.domain}/api/application/users?filter[email]=${email}`, {
         headers: {

@@ -6,7 +6,7 @@ if (!fs.existsSync(path.join(__dirname, 'config.yml'))) fs.writeFileSync(path.jo
 export let config: Config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;
 export const saveConfig = () => fs.writeFileSync(path.join(__dirname, 'config.yml'), yaml.dump(config));
 
-const generateTypesFileForConfig = (object: any, spaces: number = 0) => {
+const generateTypesFileForConfig = (object: any, spaces: number = 4) => {
     let types = '';
     Object.keys(object).forEach(key => {
         const value = object[key];
