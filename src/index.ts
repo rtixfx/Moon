@@ -5,7 +5,10 @@ import { Config } from '@/types/Config';
 if (!fs.existsSync(path.join(__dirname, 'config.yml'))) fs.writeFileSync(path.join(__dirname, 'config.yml'), fs.readFileSync(path.join(__dirname, 'config.example.yml'), 'utf8'));
 export let config: Config = yaml.load(fs.readFileSync(path.join(__dirname, 'config.yml'), 'utf8')) as Config;
 export const saveConfig = () => fs.writeFileSync(path.join(__dirname, 'config.yml'), yaml.dump(config));
-
+export var shared = {
+    update: false,
+    version: require('../package.json').version
+}
 const generateTypesFileForConfig = (object: any, spaces: number = 4) => {
     let types = '';
     Object.keys(object).forEach(key => {

@@ -2,17 +2,18 @@ import Login from '@/views/login';
 import Register from '@/views/register';
 import FourOFRour from '@/views/404';
 import Dashboard from '@/views/dashboard/dashboard';
-import Transactions from '@/views/dashboard/transactions';
 import Servers from '@/views/dashboard/servers';
 import CreateServer from '@/views/dashboard/createServer';
 import Nodes from '@/views/admin/Nodes';
 import Images from '@/views/admin/Images';
 import CreateImage from '@/views/admin/createImage';
 export const prefix = '/client';
+import addonsAuto from './addons.auto';
 
 export default {
     fourOFour: FourOFRour,
     public: [
+        ...addonsAuto.public,
         {
             path: prefix + '/login',
             component: Login
@@ -23,18 +24,12 @@ export default {
         }
     ],
     dashboard: [
+        ...addonsAuto.dashboard,
         {
             path: prefix + '/',
             component: Dashboard,
             name: 'Dashboard',
             icon: 'fas fa-tachometer-alt green',
-            category: 'Management',
-        },
-        {
-            path: prefix + '/transactions',
-            component: Transactions,
-            name: 'Transactions',
-            icon: 'fas fa-exchange-alt blue',
             category: 'Management',
         },
         {
@@ -56,27 +51,6 @@ export default {
             component: Dashboard,
             name: 'Resources Store',
             icon: 'fas fa-store blue',
-            category: 'Coins & Resources',
-        },
-        {
-            path: prefix + '/redeem',
-            component: Dashboard,
-            name: 'Redeem Coupon',
-            icon: 'fas fa-certificate purple',
-            category: 'Coins & Resources',
-        },
-        {
-            path: prefix + '/j4r',
-            component: Dashboard,
-            name: 'Join for Rewards',
-            icon: 'fas fa-gift red',
-            category: 'Coins & Resources',
-        },
-        {
-            path: prefix + '/earn',
-            component: Dashboard,
-            name: 'Earn Coins',
-            icon: 'fas fa-coins green',
             category: 'Coins & Resources',
         },
         {

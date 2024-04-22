@@ -1,5 +1,5 @@
 import express from 'express';
-import { config } from '@/index';
+import { config, shared } from '@/index';
 import db from '@/utils/db';
 const app = express.Router();
 
@@ -12,7 +12,10 @@ app.get('/system', async (req: express.Request, res: express.Response) => {
         nodes: nodes,
         images: images,
         deployCost: config.api.client.renew.deploy,
-        deployCostAddition: config.api.client.renew.deployAdditionalCost
+        deployCostAddition: config.api.client.renew.deployAdditionalCost,
+        update: shared.update,
+        version: shared.version,
+        panel: config.pterodactyl.domain
     })
 });
 

@@ -2,6 +2,9 @@ import routes from '@/components/routes';
 import Sidebar from '@/views/dashboard/sidebar';
 import { Route } from 'react-router-dom';
 import Navbar from '@/views/dashboard/navbar';
+import {
+    FullFooter as Footer
+} from './footer';
 
 export default function DashboardRouter() {
 
@@ -19,6 +22,7 @@ export default function DashboardRouter() {
                                 <div className="sideRender__container">
                                     <div className='navSpacer'></div>
                                     <route.component />
+                                    <Footer />
                                 </div>
                             </div>
                         </>

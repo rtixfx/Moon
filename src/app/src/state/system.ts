@@ -28,10 +28,16 @@ interface SystemData {
             databases: number;
             ports: number;
         }
+        update: boolean;
+        version: string;
+        panel: string;
     };
     setSystem: (payload: any) => void;
 };
 
+
+
+// these values are automatically set by the server
 
 export default createContextStore({
     system: {
@@ -49,7 +55,10 @@ export default createContextStore({
             backups: 0,
             databases: 0,
             ports: 0,
-        }
+        },
+        update: false,
+        version: 'unknown',
+        panel: 'https://panel.example.com'
     },
     setSystem: action((state: any, payload) => {
         state.system = { ...state.system, ...payload }

@@ -11,6 +11,7 @@ import axios from '@/api/axios';
 import { useEffect } from 'react';
 import { prefix } from '@/components/routes';
 import { useNavigate } from 'react-router-dom';
+import { TextFooter } from '@/components/footer';
 
 export default () => {
     const system = SystemContenxt.useStoreState((state: any) => state.system);
@@ -94,6 +95,7 @@ export default () => {
                         </div>
                     </form>
                 </div >
+                <span className='footerText'><TextFooter /></span>
             </div >
         </>
     );
