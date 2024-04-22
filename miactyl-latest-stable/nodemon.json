@@ -1,0 +1,7 @@
+{
+	"verbose": false,
+	"exec": "npx --yes pnpm install && ts-node -r tsconfig-paths/register ./src/index.ts",
+	"watch": ["src"],
+	"ignore": ["src/app/**/*"],
+	"ext": "ts"
+}

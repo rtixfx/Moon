@@ -13,7 +13,7 @@ const copyDir = (src, dest) => {
             copyDir(`${src}/${file}`, dest + '/' + file);
         }
         else {
-            fs.renameSync(`${src}/${file}`, dest + '/' + file);
+            fs.copyFileSync(`${src}/${file}`, dest + '/' + file);
         }
     }
     );

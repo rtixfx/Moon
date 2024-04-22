@@ -1,0 +1,36 @@
+{
+	"name": "arsenus-remade",
+	"version": "v1",
+	"main": "entry.js",
+	"license": "MIT",
+	"scripts": {
+		"dev": "npx --yes nodemon -ext ts -exec \"npx --yes ts-node -r tsconfig-paths/register ./src/index.ts\"",
+		"install:dev": "npm install && cd src/app && npm install",
+		"dev:web": "cd src/app && vite",
+		"build": "cd src/app && vite build"
+	},
+	"dependencies": {
+		"@types/body-parser": "^1.19.5",
+		"@types/cookie-parser": "^1.4.7",
+		"@types/node-cron": "^3.0.11",
+		"adm-zip": "^0.5.12",
+		"axios": "^1.6.8",
+		"body-parser": "^1.20.2",
+		"cookie-parser": "^1.4.6",
+		"download": "^8.0.0",
+		"ejs": "^3.1.9",
+		"express": "^4.19.2",
+		"js-yaml": "^4.1.0",
+		"mysql": "^2.18.1",
+		"node-cron": "^3.0.3",
+		"socket.io": "^4.7.5",
+		"sqlite3": "^5.1.7"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.21",
+		"@types/js-yaml": "^4.0.9",
+		"@types/mysql": "^2.15.26",
+		"@types/node": "^20.12.2",
+		"tsconfig-paths": "^4.2.0"
+	}
+}
