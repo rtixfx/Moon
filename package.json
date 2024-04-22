@@ -1,6 +1,6 @@
 {
 	"name": "arsenus-remade",
-	"version": "v1d",
+	"version": "v1",
 	"main": "entry.js",
 	"license": "MIT",
 	"scripts": {
