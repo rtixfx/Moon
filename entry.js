@@ -9,16 +9,16 @@ const startMainProcess = async () => {
     const ver = await axios.get('https://raw.githubusercontent.com/misalibaytb/miactyl/latest-stable/package.json')
     if (ver.data.version != require('./package.json').version) {
         console.log('New version available. Updating...');
-        download('https://codeload.github.com/misalibaytb/miactyl/zip/refs/heads/latest-stable').pipe(require('fs').createWriteStream('latest-stable.zip')).on('finish', () => {
-            const backup = new admZip();
-            backup.addLocalFolder('./src');
-            backup.writeZip('backup.zip');
-            const zip = new admZip('latest-stable.zip');
-            zip.extractAllTo('./', true);
-            require('fs').unlinkSync('latest-stable.zip');
-            console.log('Updated to latest stable version. Restarting main process...');
-            startMainProcess();
-        });
+        await download('https://codeload.github.com/misalibaytb/miactyl/zip/refs/heads/latest-stable', './', { filename: 'latest-stable.zip' })
+        console.log('Downloaded latest stable version. Updating...');
+        const backup = new admZip();
+        backup.addLocalFolder('./src');
+        backup.writeZip('backup.zip');
+        const zip = new admZip('latest-stable.zip');
+        zip.extractAllTo('./', true);
+        require('fs').unlinkSync('latest-stable.zip');
+        console.log('Updated to latest stable version. Restarting main process...');
+        startMainProcess();
         return;
     }
     console.log('No updates found. Starting main process...');
