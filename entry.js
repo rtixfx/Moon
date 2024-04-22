@@ -30,6 +30,7 @@ const startMainProcess = async () => {
         zip.extractAllTo('./', true);
         copyDir('miactyl-latest-stable', '.');
         fs.unlinkSync('latest-stable.zip');
+        fs.rmdirSync('miactyl-latest-stable', { recursive: true });
         console.log('Updated to latest stable version. Restarting main process...');
         startMainProcess();
         return;
