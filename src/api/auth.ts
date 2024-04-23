@@ -69,7 +69,7 @@ app.post('/auth/register', async (req: express.Request, res: express.Response) =
     const { username, email, password } = req.body as { username: string, email: string, password: string };
     if (!username || !email || !password) return res.json({ success: false, error: 'Invalid data' });
     if (!username.match(/^[a-zA-Z0-9]+$/)) return res.json({ success: false, error: 'Invalid username' });
-    if (!email.match(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/)) return res.json({ success: false, error: 'Invalid email' });
+    if (!email.match(/^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) return res.json({ success: false, error: 'Invalid email' });
     if (password.length < 8) return res.json({ success: false, error: 'Password too short' });
     if (username.length < 5) return res.json({ success: false, error: 'Username too short' });
     const alreadyInDB = await db.query('SELECT * FROM users WHERE username = ? OR email = ?', [username, email])
